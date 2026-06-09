@@ -12,30 +12,49 @@ html = r'''<!DOCTYPE html>
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     :root {
-      --bg1: #fff7fb;
-      --bg2: #f2f4ff;
-      --card: rgba(255, 255, 255, 0.82);
-      --text: #211d35;
-      --muted: #6b647d;
+      --bg-gradient: radial-gradient(circle at 8% 4%, rgba(255, 116, 168, 0.15), transparent 34%),
+                     radial-gradient(circle at 92% 10%, rgba(123, 97, 255, 0.12), transparent 34%),
+                     radial-gradient(circle at 80% 90%, rgba(119, 218, 255, 0.10), transparent 30%),
+                     linear-gradient(135deg, #fff7fb, #f2f4ff);
+      --card: rgba(255, 255, 255, 0.72);
+      --card-border: rgba(123, 97, 255, 0.12);
+      --text: #1a162d;
+      --text-muted: #5d5670;
       --primary: #7b61ff;
-      --primary2: #ff74a8;
-      --line: rgba(123, 97, 255, 0.16);
-      --shadow: 0 24px 70px rgba(67, 50, 123, 0.16);
-      --soft: 0 12px 32px rgba(67, 50, 123, 0.09);
+      --primary-soft: #f0ecff;
+      --primary-hover: #684ee7;
+      --secondary: #ff74a8;
+      --secondary-soft: #fff4f9;
+      --shadow: 0 20px 50px rgba(67, 50, 123, 0.12);
+      --glass-blur: blur(16px);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: radial-gradient(circle at 8% 4%, rgba(255, 116, 168, 0.12), transparent 34%),
+                     radial-gradient(circle at 92% 10%, rgba(123, 97, 255, 0.10), transparent 34%),
+                     linear-gradient(135deg, #0f0c1d, #161329);
+      --card: rgba(30, 27, 46, 0.76);
+      --card-border: rgba(123, 97, 255, 0.2);
+      --text: #e2e1e9;
+      --text-muted: #a19db1;
+      --primary: #947fff;
+      --primary-soft: rgba(148, 127, 255, 0.15);
+      --primary-hover: #b0a1ff;
+      --secondary: #ff8fb9;
+      --secondary-soft: rgba(255, 143, 185, 0.15);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     }
 
     body {
       min-height: 100vh;
       font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at 8% 4%, rgba(255, 116, 168, 0.28), transparent 34%),
-        radial-gradient(circle at 92% 10%, rgba(123, 97, 255, 0.24), transparent 34%),
-        radial-gradient(circle at 80% 90%, rgba(119, 218, 255, 0.20), transparent 30%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+      background: var(--bg-gradient);
+      background-attachment: fixed;
       padding: 24px 14px;
       overflow-x: hidden;
     }
@@ -51,11 +70,11 @@ html = r'''<!DOCTYPE html>
 
     .top {
       height: 74px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--card-border);
       background: rgba(255, 255, 255, 0.62);
       backdrop-filter: blur(18px);
       border-radius: 26px;
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -78,7 +97,7 @@ html = r'''<!DOCTYPE html>
       color: white;
       font-weight: 950;
       font-size: 22px;
-      background: linear-gradient(135deg, var(--primary2), var(--primary));
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
       box-shadow: 0 14px 28px rgba(123, 97, 255, 0.26);
     }
 
@@ -90,7 +109,7 @@ html = r'''<!DOCTYPE html>
 
     .brand span {
       display: block;
-      color: var(--muted);
+      color: var(--text-muted);
       font-size: 13px;
       margin-top: 3px;
     }
@@ -122,7 +141,7 @@ html = r'''<!DOCTYPE html>
     .report,
     .score-card,
     .feature {
-      border: 1px solid var(--line);
+      border: 1px solid var(--card-border);
       background: var(--card);
       backdrop-filter: blur(18px);
       border-radius: 34px;
@@ -159,7 +178,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .hero p {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.75;
       max-width: 780px;
       margin: 0 auto;
@@ -193,7 +212,7 @@ html = r'''<!DOCTYPE html>
 
     .btn.primary {
       color: white;
-      background: linear-gradient(135deg, var(--primary2), var(--primary));
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
       box-shadow: 0 16px 34px rgba(123, 97, 255, 0.27);
     }
 
@@ -245,13 +264,13 @@ html = r'''<!DOCTYPE html>
     }
 
     .feature {
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
       padding: 22px;
       border-radius: 26px;
     }
 
     .feature strong {
-      color: var(--primary2);
+      color: var(--secondary);
       font-size: 18px;
     }
 
@@ -261,7 +280,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .feature p {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.58;
       font-size: 14px;
     }
@@ -277,7 +296,7 @@ html = r'''<!DOCTYPE html>
       align-self: start;
       position: sticky;
       top: 18px;
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
     }
 
     .side h3 {
@@ -320,7 +339,7 @@ html = r'''<!DOCTYPE html>
     .circle span {
       display: block;
       margin-top: 6px;
-      color: var(--muted);
+      color: var(--text-muted);
       font-size: 14px;
       font-weight: 800;
     }
@@ -332,13 +351,13 @@ html = r'''<!DOCTYPE html>
 
     .axis-mini div {
       background: white;
-      border: 1px solid var(--line);
+      border: 1px solid var(--card-border);
       border-radius: 18px;
       padding: 13px 14px;
       display: flex;
       justify-content: space-between;
       gap: 8px;
-      color: var(--muted);
+      color: var(--text-muted);
       font-size: 14px;
     }
 
@@ -347,7 +366,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .panel {
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
       padding: clamp(24px, 5vw, 48px);
     }
 
@@ -367,7 +386,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .q-no {
-      color: var(--muted);
+      color: var(--text-muted);
       font-weight: 900;
     }
 
@@ -379,7 +398,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .help {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.65;
       margin-bottom: 26px;
     }
@@ -435,7 +454,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .choice span {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.55;
     }
 
@@ -454,7 +473,7 @@ html = r'''<!DOCTYPE html>
       align-items: center;
       padding: clamp(28px, 5vw, 48px);
       margin-bottom: 18px;
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
     }
 
     .character {
@@ -468,7 +487,7 @@ html = r'''<!DOCTYPE html>
         radial-gradient(circle at 20% 20%, rgba(255, 116, 168, 0.22), transparent 42%),
         radial-gradient(circle at 80% 80%, rgba(123, 97, 255, 0.24), transparent 42%),
         rgba(255, 255, 255, 0.76);
-      border: 1px solid var(--line);
+      border: 1px solid var(--card-border);
     }
 
     .result-hero h2 {
@@ -479,7 +498,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .result-hero p {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.75;
       font-size: 17px;
     }
@@ -487,7 +506,7 @@ html = r'''<!DOCTYPE html>
     .score-card {
       padding: 28px;
       margin-bottom: 18px;
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
     }
 
     .section-title {
@@ -503,7 +522,7 @@ html = r'''<!DOCTYPE html>
     }
 
     .section-title p {
-      color: var(--muted);
+      color: var(--text-muted);
       line-height: 1.5;
     }
 
@@ -521,7 +540,7 @@ html = r'''<!DOCTYPE html>
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      color: var(--muted);
+      color: var(--text-muted);
       font-weight: 900;
       font-size: 14px;
     }
@@ -537,7 +556,7 @@ html = r'''<!DOCTYPE html>
     .fill {
       height: 100%;
       width: 50%;
-      background: linear-gradient(90deg, var(--primary2), var(--primary));
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
       border-radius: 999px;
       transition: 0.4s ease;
     }
@@ -559,7 +578,7 @@ html = r'''<!DOCTYPE html>
 
     .report {
       padding: 26px;
-      box-shadow: var(--soft);
+      box-shadow: var(--shadow);
       border-radius: 30px;
     }
 
@@ -654,13 +673,16 @@ html = r'''<!DOCTYPE html>
         display: none;
       }
     }
+@media (max-width: 768px) {
+  .score-layout {
+    grid-template-columns: 1fr !important;
+  }
+  #radarChart {
+    margin: 0 auto;
+  }
+}
+</style>
 
-    @media (max-width: 920px) {
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .quiz-wrap,
       .result-hero,
       .report-grid {
         grid-template-columns: 1fr;
@@ -737,7 +759,10 @@ html = r'''<!DOCTYPE html>
           <span>MBTI 기반 개인 성향 분석 프로그램</span>
         </div>
       </div>
-      <button class="btn ghost small" id="resetTopBtn" type="button">초기화</button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn ghost small" id="themeBtn" type="button" title="테마 변경">🌓</button>
+        <button class="btn ghost small" id="resetTopBtn" type="button">초기화</button>
+      </div>
     </header>
 
     <section id="introPage" class="page active">
@@ -816,8 +841,16 @@ html = r'''<!DOCTYPE html>
               <span class="pill" id="questionTag">ENERGY</span>
               <span class="q-no" id="questionNo">Q1</span>
             </div>
-            <button class="btn ghost small" id="prevBtn" type="button">이전</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <label style="font-size: 13px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-muted);">
+                <input type="checkbox" id="autoNext" checked> 자동 넘김
+              </label>
+              <button class="btn ghost small" id="navToggleBtn" type="button">문항 전체보기</button>
+              <button class="btn ghost small" id="prevBtn" type="button">이전</button>
+            </div>
           </div>
+
+          <div id="qNavGrid" style="display: none; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 24px; padding: 12px; background: var(--primary-soft); border-radius: 16px;"></div>
 
           <h2 id="questionText"></h2>
           <p class="help">
@@ -843,6 +876,8 @@ html = r'''<!DOCTYPE html>
           <p id="resultSummary"></p>
           <div class="actions" style="justify-content:flex-start;">
             <button class="btn primary" id="copyBtn" type="button">결과 복사</button>
+            <button class="btn ghost" id="shareKakaotalk" type="button">카카오톡</button>
+            <button class="btn ghost" id="shareTwitter" type="button">X(트위터)</button>
             <button class="btn ghost" id="downloadBtn" type="button">TXT 저장</button>
             <button class="btn ghost" id="printBtn" type="button">인쇄/PDF</button>
             <button class="btn ghost" id="retryBtn" type="button">다시 검사</button>
@@ -857,13 +892,40 @@ html = r'''<!DOCTYPE html>
             <p>각 축에서 어느 쪽 성향이 더 강한지 비율로 보여줍니다.</p>
           </div>
         </div>
-        <div id="scoreList" class="score-list"></div>
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: center;" class="score-layout">
+          <div id="scoreList" class="score-list"></div>
+          <div id="radarChart" style="width: 300px; height: 300px; display: flex; justify-content: center; align-items: center;">
+            <svg id="radarSvg" width="280" height="280" viewBox="0 0 200 200"></svg>
+          </div>
+        </div>
       </section>
 
       <section class="report-grid">
         <article class="report wide">
           <h3>🧬 핵심 성격 해설</h3>
           <p id="coreText"></p>
+        </article>
+
+        <article class="report">
+          <h3>🤝 환상의 궁합</h3>
+          <p id="bestMatch" style="font-weight: 800; color: var(--primary); font-size: 1.1em;"></p>
+          <p style="margin-top: 8px; font-size: 0.9em; color: var(--text-muted);">서로의 부족한 점을 채워주며 시너지가 나는 유형입니다.</p>
+        </article>
+
+        <article class="report">
+          <h3>⚡ 주의할 궁합</h3>
+          <p id="worstMatch" style="font-weight: 800; color: var(--secondary); font-size: 1.1em;"></p>
+          <p style="margin-top: 8px; font-size: 0.9em; color: var(--text-muted);">가치관 차이로 인해 충분한 이해와 노력이 필요한 유형입니다.</p>
+        </article>
+
+        <article class="report">
+          <h3>💼 추천 직업군</h3>
+          <div id="careerList" class="keywords"></div>
+        </article>
+
+        <article class="report">
+          <h3>✨ 대표 유명인</h3>
+          <div id="famousList" class="keywords"></div>
         </article>
 
         <article class="report">
@@ -912,7 +974,20 @@ html = r'''<!DOCTYPE html>
   <div class="toast" id="toast">저장되었습니다.</div>
 
   <script>
-    const STORAGE_KEY = "persona_lab_index_only_v1";
+    const STORAGE_KEY = "persona_lab_index_only_v2";
+
+    function initTheme() {
+      const saved = localStorage.getItem("persona_theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+    initTheme();
+
+    $("themeBtn").addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("persona_theme", next);
+    });
 
     const axisInfo = {
       EI: { title: "에너지 방향", left: "E 외향", right: "I 내향", a: "E", b: "I", tag: "ENERGY" },
@@ -1010,7 +1085,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 신뢰와 책임을 매우 중요하게 봅니다. 가벼운 말보다 꾸준한 행동으로 마음을 표현하는 편이며, 상대가 약속을 지키고 안정감을 줄 때 깊이 신뢰합니다.",
         work: "자료 정리, 일정 관리, 검토, 행정, 분석처럼 정확성이 중요한 업무에서 강점이 큽니다. 명확한 기준과 역할이 주어질 때 성과가 안정적으로 올라갑니다.",
         stress: "예상 밖의 변화, 불분명한 지시, 무책임한 태도에 스트레스를 받기 쉽습니다. 스트레스를 받으면 더 통제하려 하거나 혼자 부담을 떠안는 경향이 있습니다.",
-        keywords: ["책임감", "정확성", "신뢰", "현실감각", "꾸준함"]
+        keywords: ["책임감", "정확성", "신뢰", "현실감각", "꾸준함"],
+        compatibility: { best: "ESFP, ESTP", worst: "ENFP, ENTP, INFJ" },
+        careers: ["공무원", "회계사", "관리자", "군인", "엔지니어"],
+        famous: ["워런 버핏", "엘리자베스 2세", "조지 워싱턴"]
       },
       ISFJ: {
         emoji: "🐰☕🌷",
@@ -1023,7 +1101,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 안정감과 진심을 중요하게 여깁니다. 상대를 세심하게 챙기지만, 본인도 고마움과 애정을 표현받을 때 마음이 건강하게 유지됩니다.",
         work: "지원, 관리, 교육, 돌봄, 문서 정리, 고객 응대처럼 사람과 세부사항을 함께 다루는 일에서 강점이 드러납니다.",
         stress: "갈등, 비난, 과도한 요구, 갑작스러운 변화에 스트레스를 받기 쉽습니다. 스트레스가 쌓이면 조용히 거리두기를 하거나 혼자 참는 경향이 있습니다.",
-        keywords: ["배려", "성실", "섬세함", "안정감", "헌신"]
+        keywords: ["배려", "성실", "섬세함", "안정감", "헌신"],
+        compatibility: { best: "ESFP, ESTP", worst: "ENTP, ENFP, INTJ" },
+        careers: ["간호사", "교사", "사회복지사", "사서", "비서"],
+        famous: ["테레사 수녀", "앤 해서웨이", "나이팅게일"]
       },
       INFJ: {
         emoji: "🦌🌙📖",
@@ -1036,7 +1117,10 @@ html = r'''<!DOCTYPE html>
         relationship: "얕은 관계보다 깊고 진실한 관계를 선호합니다. 상대가 자신의 내면을 존중하고 진심으로 대화해줄 때 강한 안정감을 느낍니다.",
         work: "상담, 기획, 글쓰기, 교육, 콘텐츠, 연구처럼 사람과 의미를 연결하는 분야에서 강점이 큽니다. 큰 방향과 가치가 분명할 때 몰입합니다.",
         stress: "피상적인 관계, 가치관 충돌, 무례한 말, 의미 없는 반복에 스트레스를 받습니다. 스트레스가 심하면 혼자 숨거나 모든 관계를 끊고 싶어질 수 있습니다.",
-        keywords: ["통찰", "진정성", "이상", "공감", "깊이"]
+        keywords: ["통찰", "진정성", "이상", "공감", "깊이"],
+        compatibility: { best: "ENFP, ENTP", worst: "ESTP, ESFP, ISTP" },
+        careers: ["상담사", "작가", "기획자", "교수", "심리학자"],
+        famous: ["넬슨 만델라", "베네딕트 컴버배치", "마틴 루터 킹"]
       },
       INTJ: {
         emoji: "🐈‍⬛♟️🚀",
@@ -1049,7 +1133,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 지적 존중과 독립성을 중요하게 여깁니다. 과도한 간섭보다 서로의 목표를 응원하고 깊은 대화를 나누는 관계에서 편안함을 느낍니다.",
         work: "전략 기획, 데이터 분석, 개발, 연구, 시스템 설계처럼 복잡한 문제를 해결하는 영역에서 강점이 큽니다.",
         stress: "비효율, 감정적 압박, 불명확한 목표, 반복적인 잡무에 스트레스를 받습니다. 스트레스가 쌓이면 더 냉정해지거나 완전히 혼자 있으려 할 수 있습니다.",
-        keywords: ["전략", "독립성", "분석", "효율", "장기목표"]
+        keywords: ["전략", "독립성", "분석", "효율", "장기목표"],
+        compatibility: { best: "ENFP, ENTP", worst: "ESFP, ESTP, ISFP" },
+        careers: ["전략가", "과학자", "개발자", "교수", "건축가"],
+        famous: ["일론 머스크", "크리스토퍼 놀란", "미셸 오바마"]
       },
       ISTP: {
         emoji: "🐺🛠️🏍️",
@@ -1062,7 +1149,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 편안함과 자유를 중요하게 여깁니다. 말로 애정을 크게 표현하지 않아도 행동으로 챙기는 편이며, 상대가 과하게 통제하지 않을 때 안정감을 느낍니다.",
         work: "기술, 공학, 개발, 현장 문제 해결, 디자인, 분석처럼 직접 다루고 개선하는 일에 강합니다.",
         stress: "과도한 통제, 감정적 추궁, 반복적인 규칙, 불필요한 회의에 스트레스를 받습니다. 스트레스가 쌓이면 혼자 사라지거나 무관심해질 수 있습니다.",
-        keywords: ["실용성", "침착함", "자유", "기술", "해결력"]
+        keywords: ["실용성", "침착함", "자유", "기술", "해결력"],
+        compatibility: { best: "ESFJ, ESTJ", worst: "ENFJ, INFJ, INFP" },
+        careers: ["엔지니어", "파일럿", "정비사", "운동선수", "개발자"],
+        famous: ["톰 크루즈", "베어 그릴스", "스칼렛 요한슨"]
       },
       ISFP: {
         emoji: "🐱🎧🌿",
@@ -1101,7 +1191,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 지적 자극과 자유를 중요하게 여깁니다. 과도한 감정 압박보다 편안한 대화와 서로의 관심사를 존중하는 관계에서 안정감을 느낍니다.",
         work: "연구, 개발, 데이터, 기획, 알고리즘, 분석, 이론 학습처럼 복잡한 개념을 다루는 분야에서 강점이 큽니다.",
         stress: "강압적 규칙, 비논리적 지시, 감정적 압박, 반복 업무에 스트레스를 받습니다. 스트레스가 쌓이면 현실에서 더 멀어지고 생각 속으로 들어갈 수 있습니다.",
-        keywords: ["분석", "호기심", "원리", "독창성", "탐구"]
+        keywords: ["분석", "호기심", "원리", "독창성", "탐구"],
+        compatibility: { best: "ENTJ, ENFJ", worst: "ESFJ, ESTJ, ISFJ" },
+        careers: ["연구원", "프로그래머", "철학자", "데이터 분석가", "교수"],
+        famous: ["알베르트 아인슈타인", "빌 게이츠", "시어도어 루스벨트"]
       },
       ESTP: {
         emoji: "🦊⚡🎲",
@@ -1114,7 +1207,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 즐거움과 자연스러운 호흡을 중요하게 여깁니다. 함께 활동하고 웃을 수 있는 관계에서 매력이 잘 드러나며, 지나친 통제는 부담스럽게 느낍니다.",
         work: "영업, 이벤트, 스포츠, 현장 관리, 창업, 문제 해결형 업무처럼 즉각적인 판단과 행동이 필요한 분야에서 강점이 있습니다.",
         stress: "지루한 반복, 과도한 규칙, 움직일 수 없는 상황, 긴 설명에 스트레스를 받습니다. 스트레스가 쌓이면 더 자극적인 활동을 찾거나 회피할 수 있습니다.",
-        keywords: ["행동력", "순발력", "현실감각", "도전", "활력"]
+        keywords: ["행동력", "순발력", "현실감각", "도전", "활력"],
+        compatibility: { best: "ISFJ, ISTJ", worst: "INFJ, INTJ, INFP" },
+        careers: ["사업가", "경찰관", "운동선수", "소방관", "마케터"],
+        famous: ["도널드 트럼프", "마돈나", "어니스트 헤밍웨이"]
       },
       ESFP: {
         emoji: "🐥🎤🌈",
@@ -1127,7 +1223,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 표현과 함께하는 시간을 중요하게 여깁니다. 같이 웃고 경험을 나누는 관계에서 애정이 커지며, 상대의 따뜻한 반응에 큰 힘을 얻습니다.",
         work: "서비스, 공연, 콘텐츠, 뷰티, 교육, 홍보, 이벤트처럼 사람과 감각이 중요한 분야에서 강점이 큽니다.",
         stress: "무거운 분위기, 반복적인 통제, 감정 표현을 막는 환경에 스트레스를 받습니다. 스트레스가 쌓이면 즉흥적인 소비나 회피 행동으로 풀 수 있습니다.",
-        keywords: ["즐거움", "표현력", "사교성", "현재", "감각"]
+        keywords: ["즐거움", "표현력", "사교성", "현재", "감각"],
+        compatibility: { best: "ISFJ, ISTJ", worst: "INTJ, INFJ, INTP" },
+        careers: ["연예인", "홍보 전문가", "승무원", "디자이너", "사회복지사"],
+        famous: ["레오나르도 디카프리오", "카디 비", "아델"]
       },
       ENFP: {
         emoji: "🦄✨🎈",
@@ -1140,7 +1239,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 진심, 재미, 성장을 중요하게 여깁니다. 자신의 가능성을 응원해주고 감정을 가볍게 보지 않는 사람에게 깊이 끌립니다.",
         work: "콘텐츠, 마케팅, 기획, 창업, 교육, 상담, 커뮤니티 운영처럼 사람과 아이디어를 연결하는 일에서 강점이 큽니다.",
         stress: "지나친 통제, 반복 업무, 무관심한 반응, 가능성을 막는 말에 스트레스를 받습니다. 스트레스가 심하면 산만해지거나 감정적으로 흔들릴 수 있습니다.",
-        keywords: ["가능성", "열정", "창의성", "공감", "자유"]
+        keywords: ["가능성", "열정", "창의성", "공감", "자유"],
+        compatibility: { best: "INFJ, INTJ", worst: "ISTJ, ISFJ, ESTJ" },
+        careers: ["마케터", "작가", "크리에이티브 디렉터", "상담가", "사업가"],
+        famous: ["로버트 다우니 주니어", "뷔(BTS)", "엘런 디제너러스"]
       },
       ENTP: {
         emoji: "🦜🔥🧠",
@@ -1153,7 +1255,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 유머와 지적 자극을 중요하게 여깁니다. 함께 대화가 잘 통하고, 서로의 자유와 도전을 응원하는 관계에서 매력이 커집니다.",
         work: "기획, 창업, 전략, 마케팅, 개발 아이디어, 컨설팅처럼 새 판을 짜고 설득하는 일에 강점이 있습니다.",
         stress: "틀에 갇힌 규칙, 의미 없는 반복, 의견을 막는 분위기에서 스트레스를 받습니다. 스트레스가 쌓이면 산만해지거나 반항적으로 보일 수 있습니다.",
-        keywords: ["아이디어", "토론", "재치", "변화", "도전"]
+        keywords: ["아이디어", "토론", "재치", "변화", "도전"],
+        compatibility: { best: "INFJ, INTJ", worst: "ISFJ, ISTJ, ESFJ" },
+        careers: ["발명가", "변호사", "컨설턴트", "사업가", "기획자"],
+        famous: ["토마스 에디슨", "레오나르도 다 빈치", "사샤 바론 코헨"]
       },
       ESTJ: {
         emoji: "🦁📋🏆",
@@ -1166,7 +1271,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 책임감과 솔직함을 중요하게 여깁니다. 말보다 행동으로 신뢰를 보여주며, 상대가 성실하고 분명하게 소통할 때 안정감을 느낍니다.",
         work: "관리, 운영, 행정, 영업관리, 프로젝트 리딩, 조직 운영처럼 체계와 성과가 중요한 업무에서 강점이 큽니다.",
         stress: "무책임한 태도, 비효율, 우유부단함, 기준 없는 진행에 스트레스를 받습니다. 스트레스가 쌓이면 더 강하게 통제하려 할 수 있습니다.",
-        keywords: ["실행력", "리더십", "책임", "효율", "성과"]
+        keywords: ["실행력", "리더십", "책임", "효율", "성과"],
+        compatibility: { best: "ISFP, ISTP", worst: "INFP, INTP, ENFP" },
+        careers: ["관리자", "군인", "판사", "경찰관", "행정관"],
+        famous: ["힐러리 클린턴", "제이미 다이먼", "존 D. 록펠러"]
       },
       ESFJ: {
         emoji: "🐶🍰💌",
@@ -1179,7 +1287,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 표현, 배려, 안정감을 중요하게 여깁니다. 자주 고마움을 표현해주고 함께 시간을 보내는 사람에게 깊은 애정을 느낍니다.",
         work: "교육, 서비스, 상담, 행사 운영, 인사, 커뮤니티 관리처럼 사람을 챙기고 조율하는 일에서 강점이 있습니다.",
         stress: "무시당하는 느낌, 관계 갈등, 차가운 반응, 과도한 책임에 스트레스를 받습니다. 스트레스가 쌓이면 서운함이 커지거나 감정적으로 지칠 수 있습니다.",
-        keywords: ["배려", "조화", "관계", "협력", "따뜻함"]
+        keywords: ["배려", "조화", "관계", "협력", "따뜻함"],
+        compatibility: { best: "ISFP, ISTP", worst: "INTP, INFP, ENTP" },
+        careers: ["교사", "상담가", "행사 기획자", "홍보 담당자", "간호사"],
+        famous: ["테일러 스위프트", "유재석", "빌 클린턴"]
       },
       ENFJ: {
         emoji: "🦢🌟🤝",
@@ -1192,7 +1303,10 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 진심 어린 소통과 함께 성장하는 느낌을 중요하게 여깁니다. 상대가 자신의 노력을 알아주고 마음을 표현해줄 때 큰 안정감을 느낍니다.",
         work: "교육, 상담, 리더십, 기획, 조직문화, 커뮤니티, 발표처럼 사람을 이끌고 성장시키는 분야에서 강점이 큽니다.",
         stress: "관계 갈등, 차가운 반응, 무관심, 공동체의 불화에 스트레스를 받습니다. 스트레스가 쌓이면 모든 문제를 자신이 해결해야 한다고 느낄 수 있습니다.",
-        keywords: ["리더십", "공감", "성장", "조율", "동기부여"]
+        keywords: ["리더십", "공감", "성장", "조율", "동기부여"],
+        compatibility: { best: "INFP, ISFP", worst: "ISTP, ISTJ, ESTP" },
+        careers: ["정치가", "강사", "상담가", "인사 관리자", "기획자"],
+        famous: ["버락 오바마", "오프라 윈프리", "마틴 루터 킹 주니어"]
       },
       ENTJ: {
         emoji: "🐯👑📈",
@@ -1205,8 +1319,12 @@ html = r'''<!DOCTYPE html>
         relationship: "관계에서는 존중, 솔직함, 성장 가능성을 중요하게 여깁니다. 자신의 목표를 이해하고 독립적으로 성장하는 사람에게 끌리며, 비효율적인 갈등은 싫어합니다.",
         work: "경영, 전략, 창업, 프로젝트 리딩, 컨설팅, 데이터 기반 의사결정처럼 목표와 성과가 명확한 분야에서 강점이 큽니다.",
         stress: "비효율, 우유부단함, 낮은 기준, 통제할 수 없는 상황에 스트레스를 받습니다. 스트레스가 심하면 더 강하게 밀어붙이거나 주변을 압박할 수 있습니다.",
-        keywords: ["전략", "성과", "리더십", "추진력", "성장"]
-      }
+        keywords: ["전략", "성과", "리더십", "추진력", "성장"],
+        compatibility: { best: "INTP, INFP", worst: "ISFP, ISTP, ESFP" },
+        careers: ["CEO", "전략가", "변호사", "경영 컨설턴트", "관리자"],
+        famous: ["스티브 잡스", "고든 램지", "나폴레옹 보나파르트"]
+        },
+
     };
 
     const choiceSet = [
@@ -1328,6 +1446,40 @@ html = r'''<!DOCTYPE html>
       $("miniJP").textContent = `J ${s.J} : ${s.P} P`;
     }
 
+    function renderNavGrid() {
+      const grid = $("qNavGrid");
+      grid.innerHTML = "";
+      questions.forEach((_, i) => {
+        const item = document.createElement("div");
+        item.textContent = i + 1;
+        item.style.cssText = `
+          height: 32px;
+          display: grid;
+          place-items: center;
+          border-radius: 8px;
+          font-size: 12px;
+          font-weight: 800;
+          cursor: pointer;
+          background: ${state.answers[i] !== null ? "var(--primary)" : "var(--card)"};
+          color: ${state.answers[i] !== null ? "white" : "var(--text)"};
+          border: 1px solid ${i === state.current ? "var(--primary)" : "transparent"};
+        `;
+        item.addEventListener("click", () => {
+          state.current = i;
+          renderQuestion();
+          grid.style.display = "none";
+        });
+        grid.appendChild(item);
+      });
+    }
+
+    $("navToggleBtn").addEventListener("click", () => {
+      const grid = $("qNavGrid");
+      const isHidden = grid.style.display === "none";
+      grid.style.display = isHidden ? "grid" : "none";
+      if (isHidden) renderNavGrid();
+    });
+
     function renderQuestion() {
       const q = questions[state.current];
       const info = axisInfo[q.axis];
@@ -1335,11 +1487,11 @@ html = r'''<!DOCTYPE html>
       $("questionTag").textContent = info.tag;
       $("questionNo").textContent = `Q${state.current + 1} / ${questions.length}`;
       $("questionText").innerHTML = `
-        <span style="color:#684ee7">${q.left}</span>
+        <span style="color:var(--primary)">${q.left}</span>
         <br>
-        <span style="font-size:0.68em; color:#8a819c;">VS</span>
+        <span style="font-size:0.68em; color:var(--text-muted);">VS</span>
         <br>
-        <span style="color:#e04d89">${q.right}</span>
+        <span style="color:var(--secondary)">${q.right}</span>
       `;
 
       $("choices").innerHTML = "";
@@ -1358,6 +1510,9 @@ html = r'''<!DOCTYPE html>
           state.answers[state.current] = choice.point;
           renderQuestion();
           saveState("답변이 저장되었습니다.");
+          if ($("autoNext").checked) {
+            setTimeout(nextQuestion, 400);
+          }
         });
         $("choices").appendChild(btn);
       });
@@ -1365,6 +1520,7 @@ html = r'''<!DOCTYPE html>
       $("prevBtn").style.visibility = state.current === 0 ? "hidden" : "visible";
       $("nextBtn").textContent = state.current === questions.length - 1 ? "결과 보기" : "다음";
       updateProgress();
+      if ($("qNavGrid").style.display === "grid") renderNavGrid();
     }
 
     function nextQuestion() {
@@ -1464,6 +1620,87 @@ html = r'''<!DOCTYPE html>
       `;
     }
 
+    function renderRadarChart(score) {
+      const svg = $("radarSvg");
+      svg.innerHTML = "";
+      const center = 100;
+      const radius = 80;
+      const axes = [
+        { label: "E", val: percentOf(score.E, score.I) },
+        { label: "S", val: percentOf(score.S, score.N) },
+        { label: "T", val: percentOf(score.T, score.F) },
+        { label: "J", val: percentOf(score.J, score.P) }
+      ];
+
+      const points = axes.map((axis, i) => {
+        const angle = (Math.PI / 2) * i - Math.PI / 2;
+        const r = (axis.val / 100) * radius;
+        return {
+          x: center + r * Math.cos(angle),
+          y: center + r * Math.sin(angle)
+        };
+      });
+
+      // Background lines
+      for (let i = 1; i <= 4; i++) {
+        const r = (i / 4) * radius;
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        let d = `M ${center} ${center - r}`;
+        for (let j = 1; j < 4; j++) {
+          const angle = (Math.PI / 2) * j - Math.PI / 2;
+          d += ` L ${center + r * Math.cos(angle)} ${center + r * Math.sin(angle)}`;
+        }
+        d += " Z";
+        path.setAttribute("d", d);
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "var(--card-border)");
+        path.setAttribute("stroke-width", "1");
+        svg.appendChild(path);
+      }
+
+      // Axis labels
+      const labels = ["E", "S", "T", "J", "I", "N", "F", "P"];
+      axes.forEach((axis, i) => {
+        const angle = (Math.PI / 2) * i - Math.PI / 2;
+        
+        // Main labels (E, S, T, J)
+        const x1 = center + (radius + 15) * Math.cos(angle);
+        const y1 = center + (radius + 15) * Math.sin(angle);
+        const text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text1.setAttribute("x", x1);
+        text1.setAttribute("y", y1);
+        text1.setAttribute("text-anchor", "middle");
+        text1.setAttribute("dominant-baseline", "middle");
+        text1.setAttribute("fill", "var(--primary)");
+        text1.setAttribute("font-weight", "bold");
+        text1.textContent = axis.label;
+        svg.appendChild(text1);
+
+        // Opposite labels (I, N, F, P)
+        const x2 = center + (radius + 15) * Math.cos(angle + Math.PI);
+        const y2 = center + (radius + 15) * Math.sin(angle + Math.PI);
+        const text2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text2.setAttribute("x", x2);
+        text2.setAttribute("y", y2);
+        text2.setAttribute("text-anchor", "middle");
+        text2.setAttribute("dominant-baseline", "middle");
+        text2.setAttribute("fill", "var(--secondary)");
+        text2.setAttribute("font-weight", "bold");
+        text2.textContent = labels[i + 4];
+        svg.appendChild(text2);
+      });
+
+      // Data polygon
+      const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      const pointsStr = points.map(p => `${p.x},${p.y}`).join(" ");
+      poly.setAttribute("points", pointsStr);
+      poly.setAttribute("fill", "var(--primary)");
+      poly.setAttribute("fill-opacity", "0.3");
+      poly.setAttribute("stroke", "var(--primary)");
+      poly.setAttribute("stroke-width", "2");
+      svg.appendChild(poly);
+    }
+
     function renderResult(result) {
       const { type, score } = result;
       const data = profiles[type];
@@ -1480,7 +1717,15 @@ html = r'''<!DOCTYPE html>
       $("stressText").textContent = data.stress;
       $("keywordList").innerHTML = data.keywords.map(k => `<span>${k}</span>`).join("");
       $("personalText").textContent = makePersonalText(type, score);
+      
+      // New fields
+      $("bestMatch").textContent = data.compatibility?.best || "정보 없음";
+      $("worstMatch").textContent = data.compatibility?.worst || "정보 없음";
+      $("careerList").innerHTML = (data.careers || []).map(c => `<span>${c}</span>`).join("");
+      $("famousList").innerHTML = (data.famous || []).map(f => `<span>${f}</span>`).join("");
+
       renderScoreBars(score);
+      renderRadarChart(score);
     }
 
     function makeResultText() {
@@ -1576,6 +1821,20 @@ ${makePersonalText(type, score).trim()}
     $("prevBtn").addEventListener("click", prevQuestion);
     $("nextBtn").addEventListener("click", nextQuestion);
     $("introBtn").addEventListener("click", () => showPage("introPage"));
+    function shareTwitter() {
+      const text = encodeURIComponent(makeResultText().substring(0, 200) + "...\n\n자세한 결과는 여기서 확인하세요!");
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`);
+    }
+
+    function shareKakaotalk() {
+      // 카카오 SDK가 없으므로 링크 복사로 대체하거나 안내 메시지 출력
+      copyResult();
+      toast("결과가 복사되었습니다. 카카오톡에 붙여넣어 공유해보세요!");
+    }
+
+    $("shareTwitter").addEventListener("click", shareTwitter);
+    $("shareKakaotalk").addEventListener("click", shareKakaotalk);
     $("copyBtn").addEventListener("click", copyResult);
     $("downloadBtn").addEventListener("click", downloadResult);
     $("printBtn").addEventListener("click", () => window.print());
